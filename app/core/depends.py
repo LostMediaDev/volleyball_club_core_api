@@ -1,17 +1,27 @@
 from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer,HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 import jwt
 from app.database import get_db
-from app.core.security import SECRET_KEY, ALGORITHM, oauth2_scheme
+from app.core.security import SECRET_KEY, ALGORITHM
 from app.crud import crud_user
 
-# 1. El decodificador base
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+#oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/user/login")
+
+security_scheme = HTTPBearer()
+
+# Token Decodefier
+def get_current_user(
+        credentials: HTTPAuthorizationCredentials = Depends(security_scheme),
+        db: Session = Depends(get_db)
+        ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="No se pudo validar las credenciales",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    token = credentials.credentials
+
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
@@ -25,10 +35,12 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         raise credentials_exception
     return user
 
-# 2. El generador dinámico de roles
+# Dinamyc Role Generator for endpoints Depends
 def require_role(required_role: str):
     def role_verifier(current_user = Depends(get_current_user)):
-        if current_user.rol != required_role:
+        if current_user.rol == "ADMIN":
+            return current_user
+        elif current_user.rol != required_role:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail=f"Acceso denegado. Se requiere el rol: {required_role}"

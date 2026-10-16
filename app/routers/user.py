@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 
 
-from app.schemas import userCreate, userResponse, userLoginSchema
+from app.schemas import userCreate, userResponse, userLoginSchema, token
 from app.crud import crud_user
 from app.core import security
+from app.core.depends import get_current_user, require_role
  
 
 router = APIRouter(
@@ -18,7 +19,7 @@ router = APIRouter(
   "password": "Im_Soo_Good"
 """
 
-@router.post("/login",response_model=userResponse)
+@router.post("/login",response_model=token)
 def try_login_user(
     user_credentials : userLoginSchema,
     db:Session = Depends(get_db)
@@ -42,6 +43,8 @@ def try_login_user(
             detail="reget"
         )
     
+    
+
     access_token = security.create_access_token(
         data={"sub": user_on.email, "rol": user_on.rol}
     )
@@ -51,7 +54,7 @@ def try_login_user(
 
 @router.get("/",response_model=list[userResponse])
 def try_get_user(
-    agent_user = Depends(get_current_admin_user),
+    current_user = Depends(require_role("ADMIN")),
     db: Session = Depends(get_db)
 ):
 

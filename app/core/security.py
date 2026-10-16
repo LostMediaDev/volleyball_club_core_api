@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 from datetime import datetime,timedelta
-
+import jwt
 
 SECRET_KEY = "a_super_ultra_duper_hyper_secret_key"  # Idealmente va en un archivo .env
 ALGORITHM = "HS256"
