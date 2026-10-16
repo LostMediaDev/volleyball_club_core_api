@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker,declarative_base
 
 
 # Local database (for now ig)
-SQLALCHEMY_DATABASE_URL = "sqlite///./voley_academy.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:///./voley_academy.db"
 
 # Config engine
 engine = create_engine(
@@ -14,7 +14,7 @@ engine = create_engine(
 
 Sessionlocal = sessionmaker(autocommit=False,autoflush=False,bind=engine)
 
-Base = declarative_base
+Base = declarative_base()
 
 # global getter for sessionlocal
 def get_db():
