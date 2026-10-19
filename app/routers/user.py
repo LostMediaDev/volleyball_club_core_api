@@ -13,11 +13,7 @@ router = APIRouter(
     prefix="/user",
     tags=["Users"]
 )
-"""
-  "name": "ED",
-  "email": "good_employed@gmail.com",
-  "password": "Im_Soo_Good"
-"""
+
 
 @router.post("/login",response_model=token)
 def try_login_user(
@@ -49,8 +45,6 @@ def try_login_user(
         data={"sub": user_on.email, "rol": user_on.rol}
     )
     return {"access_token": access_token, "token_type": "bearer"}
-
-
 
 @router.get("/",response_model=list[userResponse])
 def try_get_user(

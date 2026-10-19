@@ -10,18 +10,20 @@ from app.crud import crud_user
 
 security_scheme = HTTPBearer()
 
-# Token Decodefier
+# Token Decodefier.
 def get_current_user(
         credentials: HTTPAuthorizationCredentials = Depends(security_scheme),
         db: Session = Depends(get_db)
         ):
+    #Type credentials for use.
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="No se pudo validar las credenciales",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    token = credentials.credentials
 
+    #Verify if the user gmail on token it's already on DB.
+    token = credentials.credentials
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
@@ -35,9 +37,11 @@ def get_current_user(
         raise credentials_exception
     return user
 
-# Dinamyc Role Generator for endpoints Depends
+# Dinamyc Role Generator for endpoints Depends.
 def require_role(required_role: str):
+
     def role_verifier(current_user = Depends(get_current_user)):
+        #If the user has "ADMIN" Role, can access in all endpoints
         if current_user.rol == "ADMIN":
             return current_user
         elif current_user.rol != required_role:
