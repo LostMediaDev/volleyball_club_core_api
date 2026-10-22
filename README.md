@@ -30,12 +30,23 @@ This backend application handles the core business logic for a volleyball academ
 ---
 ## 🚀 How to use
 
-For this application, you will to use the swagger (bc im a NOT Frontend dev yet). This one uses an R-B-A-C system, so you'll
+For this application, you will to use the swagger (bc im a **NOT** Frontend dev **YET**). This one uses an RBAC system, so you'll
 need to log in and take the Token to access protected Endpoints.
 
 1. Navigate to the swagger UI: LINKKKK
+---
+
 2. Found the Login endpoint in "Users" place (it's the first one bwt, so you **shouldn't** miss it)
-<img width="374" height="110" alt="image" src="https://github.com/user-attachments/assets/dcdbdb13-bf86-4785-8f7f-28b8de65969d" />
+
+<details>
+<summary>Click to view Swagger Authorization screenshot</summary>
+<br>
+<kbd>
+  <img width="374" height="110" alt="image" src="https://github.com/user-attachments/assets/dcdbdb13-bf86-4785-8f7f-28b8de65969d" />
+</kbd>
+</details>
+
+---
 
 3. Log in using one of the pre-configured test accounts depending on the role you want to test:
 
@@ -44,18 +55,30 @@ need to log in and take the Token to access protected Endpoints.
 | **ADMIN** | `god_user@gmail.com` | `Im_God` |
 | **GESTOR** | `good_user@gmail.com` | `Im_Good` |
 
-4. Copy the `access_token` from the response.
-<img width="1304" height="113" alt="image" src="https://github.com/user-attachments/assets/5dd1c83d-a3aa-4e2b-a487-e9304fdf0694" />
+---
 
-6. Click the **Authorize** button (🔒) at the top right of the Swagger UI, paste the token, and save.
+4. Copy the `access_token` from the response.
+
+<kbd>
+<img width="1304" height="113" alt="image" src="https://github.com/user-attachments/assets/5dd1c83d-a3aa-4e2b-a487-e9304fdf0694" />
+</kbd>
+
+---
+
+5. Click the **Authorize** button (🔒) at the top right of the Swagger UI, paste the token, and save.
 <div>
+  <kbd>
   <img width="178" height="93" alt="image" src="https://github.com/user-attachments/assets/06c190e2-4ce4-4ae7-8d8a-ea80a27e0875" />
+  </kbd>
 </div>
 <div>
+  <kbd>
   <img width="649" height="267" alt="image" src="https://github.com/user-attachments/assets/b3487fdb-5073-4cf1-8a5f-27296cc412c8" />
+  </kbd>
 </div>
 
 ---
+
 ## 🏛️ Architecture & Best Practices
 
 This project was built following scalable backend patterns to ensure clean separation of concerns, maintainability, and security:
