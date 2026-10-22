@@ -41,5 +41,3 @@ def get_plan(
     db: Session = Depends(get_db),
 ):
     return service_members.get_plan(db, plan_id)
-
-#OP CODE END

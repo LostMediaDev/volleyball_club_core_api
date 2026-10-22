@@ -1,9 +1,10 @@
 from passlib.context import CryptContext
 from datetime import datetime,timedelta
 import jwt
+import os
 
-SECRET_KEY = "a_super_ultra_duper_hyper_secret_key"  # Idealmente va en un archivo .env
-ALGORITHM = "HS256"
+SECRET_KEY = os.getenv("SECRET_KEY","nothing_here_dude") # Idealmente va en un archivo .env
+ALGORITHM = os.getenv("ALGORITHM","not_even_here")
 
 
 pwd_context = CryptContext(schemes=["bcrypt"],deprecated="auto")

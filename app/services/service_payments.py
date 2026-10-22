@@ -1,6 +1,6 @@
-#OP CODE START
-#OP Business logic for the payment domain.
-#OP Computes what a member owes from their active inscription + plan, and records charges.
+
+#Business logic for the payment domain.
+#Computes what a member owes from their active inscription + plan, and records charges.
 
 import calendar
 from datetime import date
@@ -23,7 +23,7 @@ from app.services.service_members import (
     _resolve_member,
 )
 
-#OP CODE - Number of months each billing cycle covers.
+#Number of months each billing cycle covers.
 FREQUENCY_MONTHS = {
     FrecuenciaPlan.MENSUAL: 1,
     FrecuenciaPlan.CUATRIMESTRAL: 4,
@@ -50,7 +50,7 @@ def _frequency_months(frequency: FrecuenciaPlan) -> int:
 
 
 def _combined_discount(db: Session, member_id: int, plan) -> Decimal:
-    #OPPlan frequency discount + every active member discount, capped at 100%.
+    #Plan frequency discount + every active member discount, capped at 100%.
     total = Decimal(str(plan.discount_percentage or 0))
     for discount in crud_members.get_active_discounts_by_member(db, member_id):
         total += Decimal(str(discount.percentage))
@@ -63,8 +63,8 @@ def _period_amount(plan, percentage: Decimal) -> Decimal:
 
 
 def _schedule(inscription, until: date) -> tuple[list[date], Optional[date]]:
-    #OP CODE - Due dates from start_date stepping by the plan frequency, up to `until`.
-    #OP CODE - Returns (due_dates_so_far, next_due_date_after_the_window).
+    #Due dates from start_date stepping by the plan frequency, up to `until`.
+    #Returns (due_dates_so_far, next_due_date_after_the_window).
     months = _frequency_months(inscription.plan.frequency)
     due_dates: list[date] = []
     current = inscription.start_date
@@ -133,7 +133,7 @@ def quote(db: Session, member_id: Optional[int] = None, dni: Optional[str] = Non
 
 
 def _next_payable_due_date(db: Session, inscription) -> date:
-    #OP CODE - First period without an active payment; falls back to the upcoming one.
+    #First period without an active payment; falls back to the upcoming one.
     today = date.today()
     schedule, next_due = _schedule(inscription, today)
     paid_dates = {
@@ -216,4 +216,3 @@ def admin_update_payment(
     fields = data.model_dump(exclude_unset=True)
     return crud_payments.update_payment_audit(db, payment, fields, admin_user.id)
 
-#OP CODE END
