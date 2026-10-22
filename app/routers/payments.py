@@ -1,5 +1,5 @@
-#OP CODE START
-#OP CODE - Payment (cobros) endpoints. Thin controllers: validation + delegation to services.
+
+
 
 from datetime import date
 from typing import Optional
@@ -16,6 +16,8 @@ from app.schemas import (
     PaymentResponse,
 )
 from app.services import service_payments
+
+#Payment (cobros) endpoints. Thin controllers: validation + delegation to services.
 
 router = APIRouter(
     prefix="/payments",
@@ -80,4 +82,4 @@ def admin_update_payment(
 ):
     return service_payments.admin_update_payment(db, payment_id, data, current_user)
 
-#OP CODE END
+

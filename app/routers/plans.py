@@ -1,6 +1,3 @@
-#OP CODE START
-#OP CODE - Training plan endpoints (minimal: create, list, get).
-
 from typing import Optional
 
 from fastapi import APIRouter, Depends, status
@@ -10,6 +7,8 @@ from app.core.depends import require_role
 from app.database import get_db
 from app.schemas import PlanCreate, PlanResponse
 from app.services import service_members
+
+#Training plan endpoints
 
 router = APIRouter(
     prefix="/plans",

@@ -37,8 +37,7 @@ class token(BaseModel):
     token_type: str
 
 
-#OP CODE START
-#OP CODE - Schemas for the member management domain (Pydantic v2, ORM mode).
+#Schemas for the member management domain
 
 class MemberCreate(BaseModel):
     dni: str = Field(..., min_length=5, max_length=20)
@@ -131,8 +130,7 @@ class DiscountResponse(BaseModel):
     created_at: datetime
 
 
-#OP CODE START
-#OP CODE - Schemas for the payment (cobros) domain.
+#Schemas for the payment (cobros) domain.
 
 class PaymentCreate(BaseModel):
     member_id: Optional[int] = None
@@ -192,5 +190,3 @@ class BillingQuoteResponse(BaseModel):
     status: str
     days_overdue: int
     unpaid_periods: list[BillingPeriod]
-
-#OP CODE END

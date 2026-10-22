@@ -1,6 +1,3 @@
-#OP CODE START
-#OP CODE - Member management endpoints. Thin controllers: validation + delegation to services.
-
 from typing import Optional
 
 from fastapi import APIRouter, Depends, status
@@ -18,6 +15,9 @@ from app.schemas import (
     MemberUpdate,
 )
 from app.services import service_members
+
+#Member management endpoints. 
+#Thin controllers: validation and delegation to services.
 
 router = APIRouter(
     prefix="/members",
@@ -106,4 +106,3 @@ def delete_member(
 ):
     return service_members.delete_member(db, member_id)
 
-#OP CODE END

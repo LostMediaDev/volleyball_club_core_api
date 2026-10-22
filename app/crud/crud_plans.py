@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.models import Plan
 from app.schemas import PlanCreate
 
-#CRUD for plan's enviroment
+#CRUD for plan's enviroment.
 
 def get_plan_by_id(db: Session, plan_id: int) -> Optional[Plan]:
     return db.query(Plan).filter(Plan.id == plan_id).first()

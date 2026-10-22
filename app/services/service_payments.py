@@ -1,6 +1,6 @@
 #OP CODE START
-#OP CODE - Business logic for the payment (cobros) domain.
-#OP CODE - Computes what a member owes from their active inscription + plan, and records charges.
+#OP Business logic for the payment domain.
+#OP Computes what a member owes from their active inscription + plan, and records charges.
 
 import calendar
 from datetime import date
@@ -50,7 +50,7 @@ def _frequency_months(frequency: FrecuenciaPlan) -> int:
 
 
 def _combined_discount(db: Session, member_id: int, plan) -> Decimal:
-    #OP CODE - Plan frequency discount + every active member discount, capped at 100%.
+    #OPPlan frequency discount + every active member discount, capped at 100%.
     total = Decimal(str(plan.discount_percentage or 0))
     for discount in crud_members.get_active_discounts_by_member(db, member_id):
         total += Decimal(str(discount.percentage))

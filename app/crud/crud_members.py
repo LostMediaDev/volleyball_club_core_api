@@ -23,7 +23,7 @@ def get_member_by_email(db: Session, email: str) -> Optional[Member]:
 def get_all_members(db: Session, is_active: Optional[bool] = None) -> list[Member]:
     this_query = db.query(Member)
     if is_active is not None:
-        this_query = query.filter(Member.is_active == is_active)
+        this_query = this_query.filter(Member.is_active == is_active)
     return this_query.all()
 
 
@@ -112,5 +112,3 @@ def _save(db: Session, instance):
     db.commit()
     db.refresh(instance)
     return instance
-
-#OP CODE END
