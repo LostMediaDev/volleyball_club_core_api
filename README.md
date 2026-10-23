@@ -33,7 +33,7 @@ This backend application handles the core business logic for a volleyball academ
 For this application, you will to use the swagger (bc im a **NOT** Frontend dev **YET**). This one uses an RBAC system, so you'll
 need to log in and take the Token to access protected Endpoints.
 
-1. Navigate to the swagger UI: LINKKKK
+1. Navigate to the swagger UI: [Voleyball Swagger](https://volleyball-club-core-api.onrender.com/docs)
 ---
 
 2. Found the Login endpoint in "Users" place (it's the first one bwt, so you **shouldn't** miss it)
