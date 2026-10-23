@@ -1,6 +1,5 @@
-#OP CODE START
-#OP CODE - Business logic for member management.
-#OP CODE - Orchestrates the crud layer and raises domain errors (mapped to HTTP in main.py).
+#Business logic for member management.
+#Orchestrates the crud layer and raises domain errors (mapped to HTTP in main.py).
 
 from typing import Optional
 
@@ -17,7 +16,7 @@ from app.schemas import (
 )
 
 
-#OP CODE - Domain errors. The router stays thin; main.py translates these to HTTP.
+#Domain errors. The router stays thin; main.py translates these to HTTP.
 class ServiceError(Exception):
     status_code = 400
 
@@ -151,7 +150,7 @@ def create_plan(db: Session, data: PlanCreate) -> Plan:
 
 
 def _resolve_member(db: Session, member_id: Optional[int], dni: Optional[str]) -> Member:
-    #OP CODE - Accepts either the internal id or the unique dni, but exactly one.
+    #Accepts either the internal id or the unique dni, but exactly one.
     if member_id is None and dni is None:
         raise BusinessRuleError("Provide either member_id or dni")
     if member_id is not None and dni is not None:
@@ -161,4 +160,3 @@ def _resolve_member(db: Session, member_id: Optional[int], dni: Optional[str]) -
         return get_member(db, member_id)
     return get_member_by_dni(db, dni)
 
-#OP CODE END

@@ -39,14 +39,14 @@ class User(Base):
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     rol: Mapped[RolUsuario] = mapped_column(Enum(RolUsuario), default=RolUsuario.GESTOR, nullable=False)
 
-    #OP CODE START
+
     payments_registered: Mapped[List["Payment"]] = relationship(
         back_populates="registered_by", foreign_keys="Payment.registered_by_id"
     )
     payments_updated: Mapped[List["Payment"]] = relationship(
         back_populates="updated_by", foreign_keys="Payment.updated_by_id"
     )
-    #OP CODE END
+
 
     #pagos_registrados: Mapped[List["Pago"]] = relationship(back_populates="usuario")
 
@@ -117,9 +117,9 @@ class Pago(Base):
 
 """
 
-#OP CODE START
-#OP CODE - Models for the member (socio/alumno) management domain.
-#OP CODE - Added by assistant; kept separate from the legacy commented block above.
+
+#Models for the member (socio/alumno) management domain.
+#Added by assistant; kept separate from the legacy commented block above.
 
 class Member(Base):
     __tablename__ = "members"
@@ -146,7 +146,7 @@ class Plan(Base):
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     base_amount: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     frequency: Mapped[FrecuenciaPlan] = mapped_column(Enum(FrecuenciaPlan), nullable=False)
-    #OP CODE - Automatic discount applied when the plan is NOT monthly.
+    #Automatic discount applied when the plan is NOT monthly.
     discount_percentage: Mapped[float] = mapped_column(Numeric(5, 2), default=0, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), nullable=False)
@@ -189,8 +189,8 @@ class Discount(Base):
 
 
 class Payment(Base):
-    #OP CODE - Append-only record of a charge. GESTOR can only insert; ADMIN can patch
-    #OP CODE - and the update audit columns (updated_by_id / updated_at) get overwritten.
+    #Append-only record of a charge. GESTOR can only insert; ADMIN can patch
+    #and the update audit columns (updated_by_id / updated_at) get overwritten.
     __tablename__ = "payments"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
@@ -217,5 +217,3 @@ class Payment(Base):
     updated_by: Mapped[Optional["User"]] = relationship(
         back_populates="payments_updated", foreign_keys=[updated_by_id]
     )
-
-#OP CODE END
