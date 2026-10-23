@@ -58,6 +58,7 @@ def try_get_user(
 @router.post("/register",response_model=userResponse,status_code=status.HTTP_201_CREATED)
 def try_register_new_user(
     user_data : userCreate,
+    current_user = Depends(require_role("ADMIN")),
     db: Session = Depends(get_db)
 ):
     #verify if user exist
